@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.DefaultEditorKit;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +12,7 @@ public class Design extends JFrame implements ActionListener{
     JTextArea textArea;
     JMenuBar menuBar;
     JMenu menuFile,menuEdit,menuHelp;
-    JMenuItem Open,Save,SaveAs,Exit;
+    JMenuItem Open,Save,SaveAs,Exit,cut,copy,paste,about;
     JFileChooser fileChooser;
     File fp;
     ImageIcon icon;
@@ -36,6 +37,16 @@ public class Design extends JFrame implements ActionListener{
         Save = new JMenuItem("Save");
         SaveAs = new JMenuItem("Save as");
         Exit = new JMenuItem("Exit");
+        about = new JMenuItem("About us");
+
+        //Cut copy and past
+
+        cut = new JMenuItem(new DefaultEditorKit.CutAction());
+        copy = new JMenuItem(new DefaultEditorKit.CopyAction());
+        paste = new JMenuItem(new DefaultEditorKit.PasteAction());
+
+        //File chooser and icon option
+
         fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new FileNameExtensionFilter("Text file only","txt"));
         fileChooser.setDialogTitle("Choose a text file");
@@ -43,25 +54,6 @@ public class Design extends JFrame implements ActionListener{
         this.setIconImage(icon.getImage());
 
 
-        //Add shortCut to the menu item
-        Open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,ActionEvent.CTRL_MASK));
-        Save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,ActionEvent.CTRL_MASK));
-        Exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,ActionEvent.CTRL_MASK));
-
-
-
-        //Add menu item in in menu
-
-        menuFile.add(Open);
-        menuFile.add(Save);
-        menuFile.add(SaveAs);
-        menuFile.add(Exit);
-
-        //Add menu in the menu bar
-
-        menuBar.add(menuFile);
-        menuBar.add(menuEdit);
-        menuBar.add(menuHelp);
 
     }
 
@@ -69,6 +61,29 @@ public class Design extends JFrame implements ActionListener{
         setJMenuBar(menuBar);
         getContentPane().add(textArea);
         getContentPane().add(new JScrollPane(textArea),BorderLayout.CENTER);
+        textArea.setMargin(new Insets(10,10,10,10));
+        //Add menu in the menu bar
+
+        menuBar.add(menuFile);
+        menuBar.add(menuEdit);
+        menuBar.add(menuHelp);
+
+        //Add menu item in in menu
+
+        menuFile.add(Open);
+        menuFile.add(Save);
+        menuFile.add(SaveAs);
+        menuFile.add(Exit);
+        menuEdit.add(copy);
+        menuEdit.add(cut);
+        menuEdit.add(paste);
+        menuHelp.add(about);
+
+        //Add shortCut to the menu item
+        Open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,ActionEvent.CTRL_MASK));
+        Save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,ActionEvent.CTRL_MASK));
+        Exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,ActionEvent.CTRL_MASK));
+
     }
     private void addlistener(){
         Open.addActionListener(this);
@@ -108,6 +123,9 @@ public class Design extends JFrame implements ActionListener{
 
             }else if(e.getSource()==SaveAs){
                 saveAs();
+            }else if(e.getSource()== about){
+
+
             }
 
     }

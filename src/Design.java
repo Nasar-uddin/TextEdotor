@@ -12,16 +12,13 @@ public class Design extends JFrame implements ActionListener{
     JTextArea textArea;
     JMenuBar menuBar;
     JMenu menuFile,menuEdit,menuHelp;
-    JMenuItem Open,Save,SaveAs,Exit,cut,copy,paste,about;
+    JMenuItem Open,Save,SaveAs,Exit,cut,copy,paste,about,select_all;
     JFileChooser fileChooser;
     File fp;
     ImageIcon icon;
     BufferedWriter bufferedWriter = null;
     Design(){
-        setTitle("NotePad++");
-        setVisible(true);
-        setSize(800,600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setFont(new Font("Arial",Font.ITALIC,20));
         initComponents();
         addComponents();
         addlistener();
@@ -29,6 +26,7 @@ public class Design extends JFrame implements ActionListener{
 
     private void initComponents(){
         textArea = new JTextArea();
+        textArea.setFont(new Font("Arial",Font.PLAIN,16));
         menuBar = new JMenuBar();
         menuFile = new JMenu("File");
         menuEdit = new JMenu("Edit");
@@ -38,6 +36,7 @@ public class Design extends JFrame implements ActionListener{
         SaveAs = new JMenuItem("Save as");
         Exit = new JMenuItem("Exit");
         about = new JMenuItem("About us");
+        select_all = new JMenuItem("Select all");
 
         //Cut copy and past
 
@@ -74,6 +73,7 @@ public class Design extends JFrame implements ActionListener{
         menuFile.add(Save);
         menuFile.add(SaveAs);
         menuFile.add(Exit);
+        menuEdit.add(select_all);
         menuEdit.add(copy);
         menuEdit.add(cut);
         menuEdit.add(paste);
@@ -90,6 +90,8 @@ public class Design extends JFrame implements ActionListener{
         Save.addActionListener(this);
         SaveAs.addActionListener(this);
         Exit.addActionListener(this);
+        about.addActionListener(this);
+        select_all.addActionListener(this);
     }
 
     @Override
@@ -124,8 +126,15 @@ public class Design extends JFrame implements ActionListener{
             }else if(e.getSource()==SaveAs){
                 saveAs();
             }else if(e.getSource()== about){
+                //JOptionPane jp = new JOptionPane();
+                JOptionPane.showMessageDialog(this, "Nasar uddin\n"
+                                +"Muntaqim Ahmed\n"
+                                + "Omar Faruk\n"
+                                + "Soma Akter",
+                        "The Brogrammers", 1);
 
-
+            }else if(e.getSource()==select_all){
+                textArea.selectAll();
             }
 
     }
